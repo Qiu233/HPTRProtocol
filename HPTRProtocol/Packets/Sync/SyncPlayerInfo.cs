@@ -1,8 +1,8 @@
 ﻿namespace HPTRProtocol.Packets.Sync;
 
-public class SyncPlayer : Packet
+public class SyncPlayerInfo : Packet
 {
-	public override MessageID Type => MessageID.SyncPlayer;
+	public override MessageID Type => MessageID.SyncPlayerInfo;
 	public byte PlayerSlot { get; set; }
 	public byte SkinVariant { get; set; }
 	public byte Hair { get; set; }

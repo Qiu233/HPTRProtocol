@@ -4,14 +4,14 @@ public class TileChange : Packet
 {
 	public override MessageID Type => MessageID.TileChange;
 	public byte ChangeType { get; set; }
-	public ShortPosition Position { get; set; }
+	public Position<short> Position { get; set; }
 	public short TileType { get; set; }
 	public byte Style { get; set; }
 
 	protected override void DeserializeOverride(BinaryReader br)
 	{
 		ChangeType = br.ReadByte();
-		Position = br.ReadS<ShortPosition>();
+		Position = br.ReadS<Position<short>>();
 		TileType = br.ReadInt16();
 		Style = br.ReadByte();
 	}

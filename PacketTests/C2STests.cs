@@ -30,10 +30,10 @@ public class C2STests
 
 	[TestedFor("1.4.3.6")]
 	[Fact]
-	public void RequestTileDataTest()
+	public void RequestEssentialTileTest()
 	{
 		ClientSerializeTest(
-			new RequestTileData
+			new RequestEssentialTile
 			{
 				Position = new(20, 40)
 			}
@@ -54,6 +54,43 @@ public class C2STests
 				Context = PlayerSpawnContext.ReviveFromDeath
 			}
 			, new byte[] { 0x0D, 0x00, 0x0C, 0x00, 0x14, 0x00, 0x28, 0x00, 0x14, 0x00, 0x00, 0x00, 0x00 }
+		);
+	}
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void RequestSignTest()
+	{
+		ClientSerializeTest(
+			new RequestSign
+			{
+				Position = new(50, 60)
+			}
+			, new byte[] { 0x07, 0x00, 0x2E, 0x32, 0x00, 0x3C, 0x00 }
+		);
+	}
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void SendPasswordTest()
+	{
+		ClientSerializeTest(
+			new SendPassword
+			{
+				Password = "abc123"
+			}
+			, new byte[] { 0x0A, 0x00, 0x26, 0x06, 0x61, 0x62, 0x63, 0x31, 0x32, 0x33 }
+		);
+	}
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void SpawnBossTest()
+	{
+		ClientSerializeTest(
+			new SpawnBoss
+			{
+				OtherPlayerSlot = 20,
+				NPCType = 50
+			}
+			, new byte[] { 0x07, 0x00, 0x3D, 0x14, 0x00, 0x32, 0x00 }
 		);
 	}
 }

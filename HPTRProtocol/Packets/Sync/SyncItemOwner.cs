@@ -1,8 +1,8 @@
 ﻿namespace HPTRProtocol.Packets.Sync;
 
-public class ItemOwner : Packet, IItemSlot, IOtherPlayerSlot
+public class SyncItemOwner : Packet, IItemSlot, IOtherPlayerSlot
 {
-    public override MessageID Type => MessageID.ItemOwner;
+    public override MessageID Type => MessageID.SyncItemOwner;
     public short ItemSlot { get; set; }
     public byte OtherPlayerSlot { get; set; }
 

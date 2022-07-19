@@ -1,8 +1,8 @@
-﻿namespace HPTRProtocol.Packets.C2S;
+﻿namespace HPTRProtocol.Packets.S2C;
 
-public class RequestWorldInfo : Packet
+public class StartPlaying : Packet
 {
-	public override MessageID Type => MessageID.RequestWorldInfo;
+    public override MessageID Type => MessageID.StartPlaying;
 
 	protected override void DeserializeOverride(BinaryReader br)
 	{

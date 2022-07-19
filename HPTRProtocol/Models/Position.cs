@@ -3,15 +3,15 @@
 namespace HPTRProtocol.Models;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Position : ISerializable
+public struct Position<T> : ISerializable where T : unmanaged
 {
-	public Position(int x, int y)
+	public Position(T x, T y)
 	{
 		X = x;
 		Y = y;
 	}
-	public int X;
-	public int Y;
+	public T X;
+	public T Y;
 	public override string ToString()
 	{
 		return $"[{X}, {Y}]";
@@ -19,13 +19,13 @@ public struct Position : ISerializable
 
 	public void Serialize(BinaryWriter bw)
 	{
-		bw.Write(X);
-		bw.Write(Y);
+		bw.WriteValue(X);
+		bw.WriteValue(Y);
 	}
 
 	public void Deserialize(BinaryReader br)
 	{
-		X = br.ReadInt32();
-		Y = br.ReadInt32();
+		X = br.ReadValue<T>();
+		Y = br.ReadValue<T>();
 	}
 }

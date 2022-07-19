@@ -38,7 +38,7 @@ public abstract partial class TileEntity
 		t.WriteExtraData(bw);
 	}
 	public abstract TileEntityType EntityType { get; }
-	public ShortPosition Position { get; set; }
+	public Position<short> Position { get; set; }
 	public int ID { get; set; }
 	public abstract void WriteExtraData(BinaryWriter writer);
 	public abstract TileEntity ReadExtraData(BinaryReader reader);

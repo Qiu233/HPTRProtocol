@@ -24,20 +24,20 @@ internal static class Globals
 	{
 		return string.Join(", ", b.Select(t => $"0x{t:X2}"));
 	}
-	public static string BuildLogExpectedAndGot(string expected, string got)
+	public static string BuildLogExpectedAndActual(string expected, string actual)
 	{
-		return $"Expected: {expected}, got {got}";
+		return $"Expected: {expected}\nActual: {actual}";
 	}
 
 	public static void ClientSerializeTest(Packet p, byte[] expected)
 	{
 		byte[] result = ClientSerialize(p);
-		Assert.True(BufferEquals(result, expected), BuildLogExpectedAndGot(GetBufferString(expected), GetBufferString(result)));
+		Assert.True(BufferEquals(result, expected), BuildLogExpectedAndActual(GetBufferString(expected), GetBufferString(result)));
 	}
 
 	public static void ServerSerializeTest(Packet p, byte[] expected)
 	{
 		byte[] result = ServerSerialize(p);
-		Assert.True(BufferEquals(result, expected), BuildLogExpectedAndGot(GetBufferString(expected), GetBufferString(result)));
+		Assert.True(BufferEquals(result, expected), BuildLogExpectedAndActual(GetBufferString(expected), GetBufferString(result)));
 	}
 }

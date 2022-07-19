@@ -1,8 +1,8 @@
-﻿namespace HPTRProtocol.Packets.C2S;
+﻿namespace HPTRProtocol.Packets.Sync;
 
-public class RequestChestOpen : Packet
+public class HitSwitch : Packet
 {
-	public override MessageID Type => MessageID.RequestChestOpen;
+	public override MessageID Type => MessageID.HitSwitch;
 	public Position<short> Position { get; set; }
 
 	protected override void DeserializeOverride(BinaryReader br) => Position = br.ReadS<Position<short>>();

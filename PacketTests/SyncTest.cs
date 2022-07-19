@@ -4,10 +4,10 @@ public class SyncTest
 {
 	[TestedFor("1.4.3.6")]
 	[Fact]
-	public void ChangeDoortTest()
+	public void DoorToggletTest()
 	{
 		ClientSerializeTest(
-			new ChangeDoor
+			new DoorToggle
 			{
 				ChangeType = true,
 				Position = new(20, 40),
@@ -41,7 +41,7 @@ public class SyncTest
 	public void ItemOwnerTest()
 	{
 		ClientSerializeTest(
-			new ItemOwner
+			new SyncItemOwner
 			{
 				ItemSlot = 20,
 				OtherPlayerSlot = 5
@@ -67,7 +67,7 @@ public class SyncTest
 	public void PlayerControlsTest()
 	{
 		ClientSerializeTest(
-			new PlayerControls
+			new UpdatePlayer
 			{
 				PlayerSlot = 20,
 				Bit1 = 2,
@@ -147,7 +147,7 @@ public class SyncTest
 	public void SyncEquipmentTest()
 	{
 		ClientSerializeTest(
-			new SyncEquipment
+			new SyncPlayerInvSlot
 			{
 				PlayerSlot = 7,
 				ItemSlot = 20,
@@ -163,7 +163,7 @@ public class SyncTest
 	public void SyncItemTest()
 	{
 		ClientSerializeTest(
-			new SyncItem
+			new SyncItemDrop
 			{
 				ItemSlot = 30,
 				ItemType = 20,
@@ -213,7 +213,7 @@ public class SyncTest
 	public void SyncPlayerTest()
 	{
 		ClientSerializeTest(
-			new SyncPlayer
+			new SyncPlayerInfo
 			{
 				PlayerSlot = 2,
 				SkinVariant = 6,
@@ -245,7 +245,7 @@ public class SyncTest
 	public void SyncPlayerChestTest() //TODO: need further test on ChestName
 	{
 		ClientSerializeTest(
-			new SyncPlayerChest
+			new SyncActiveChest
 			{
 				Chest = 20,
 				Position = new(80, 120)
@@ -312,15 +312,380 @@ public class SyncTest
 					Tiles = new SimpleTileData[5, 10],
 				}
 			}
-			, new byte[] { 
-				0x6E, 0x00, 0x14, 0x14, 0x00, 0x28, 0x00, 0x3C, 0x50, 0x01, 0x00, 0x00, 0x00, 0x00, 
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+			, new byte[] {
+				0x6E, 0x00, 0x14, 0x14, 0x00, 0x28, 0x00, 0x3C, 0x50, 0x01, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
+		);
+	}
+
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void ActiveNPCTest()
+	{
+		ClientSerializeTest(
+			new ActiveNPC
+			{
+				NPCSlot = 20,
+				PlayerSlot = 40
+			}
+			, new byte[] { 0x06, 0x00, 0x28, 0x28, 0x14, 0x00 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void AddNPCBuffTest()
+	{
+		ClientSerializeTest(
+			new AddNPCBuff
+			{
+				BuffType = 40,
+				BuffTime = 1800
+			}
+			, new byte[] { 0x09, 0x00, 0x35, 0x00, 0x00, 0x28, 0x00, 0x08, 0x07 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void AddPlayerBuffTest()
+	{
+		ClientSerializeTest(
+			new AddPlayerBuff
+			{
+				OtherPlayerSlot = 20,
+				Buff = new() { Type = 60, Time = 3600 }
+			}
+			, new byte[] { 0x0A, 0x00, 0x37, 0x14, 0x3C, 0x00, 0x10, 0x0E, 0x00, 0x00 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void DodgeTest()
+	{
+		ClientSerializeTest(
+			new Dodge
+			{
+				PlayerSlot = 20,
+				DodgeType = 6
+			}
+			, new byte[] { 0x05, 0x00, 0x3E, 0x14, 0x06 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void HealEffectTest()
+	{
+		ClientSerializeTest(
+			new HealEffect
+			{
+				PlayerSlot = 6,
+				Amount = 500
+			}
+			, new byte[] { 0x06, 0x00, 0x23, 0x06, 0xF4, 0x01 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void HealOtherPlayerTest()
+	{
+		ClientSerializeTest(
+			new HealOtherPlayer
+			{
+				OtherPlayerSlot = 6,
+				Amount = 400
+			}
+			, new byte[] { 0x06, 0x00, 0x42, 0x06, 0x90, 0x01 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void HitSwitchTest()
+	{
+		ClientSerializeTest(
+			new HitSwitch
+			{
+				Position = new(20, 40)
+			}
+			, new byte[] { 0x07, 0x00, 0x3B, 0x14, 0x00, 0x28, 0x00 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void ItemAnimationTest()
+	{
+		ClientSerializeTest(
+			new ItemAnimation
+			{
+				PlayerSlot = 60,
+				Rotation = 2f,
+				Animation = 20
+			}
+			, new byte[] { 0x0A, 0x00, 0x29, 0x3C, 0x00, 0x00, 0x00, 0x40, 0x14, 0x00 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void LiquidUpdateTest()
+	{
+		ClientSerializeTest(
+			new LiquidUpdate
+			{
+				Liquid = 20,
+				LiquidType = 30,
+				TilePosition = new(50, 60)
+			}
+			, new byte[] { 0x09, 0x00, 0x30, 0x32, 0x00, 0x3C, 0x00, 0x14, 0x1E }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void ManaEffectTest()
+	{
+		ClientSerializeTest(
+			new ManaEffect
+			{
+				PlayerSlot = 12,
+				Amount = 60
+			}
+			, new byte[] { 0x06, 0x00, 0x2B, 0x0C, 0x3C, 0x00 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void NPCHomeTest()
+	{
+		ClientSerializeTest(
+			new NPCHome
+			{
+				NPCSlot = 10,
+				Position = new(100, 200),
+				Homeless = 3
+			}
+			, new byte[] { 0x0A, 0x00, 0x3C, 0x0A, 0x00, 0x64, 0x00, 0xC8, 0x00, 0x03 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void PaintTileTest()
+	{
+		ClientSerializeTest(
+			new PaintTile
+			{
+				Color = 7,
+				Position = new(700, 300)
+			}
+			, new byte[] { 0x08, 0x00, 0x3F, 0xBC, 0x02, 0x2C, 0x01, 0x07 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void PaintWallTest()
+	{
+		ClientSerializeTest(
+			new PaintWall
+			{
+				Color = 7,
+				Position = new(700, 300)
+			}
+			, new byte[] { 0x08, 0x00, 0x40, 0xBC, 0x02, 0x2C, 0x01, 0x07 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void PlaceChestTest()
+	{
+		ClientSerializeTest(// TODO: add a server side serialization
+			new PlaceChest
+			{
+				Position = new(500, 600),
+				Action = 2,
+				Style = 50,
+				ChestIDToDestroy = 0
+			}
+			, new byte[] { 0x0C, 0x00, 0x22, 0x02, 0xF4, 0x01, 0x58, 0x02, 0x32, 0x00, 0x00, 0x00 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void PlayerBuffsTest()
+	{
+		var packet = new PlayerBuffs()
+		{
+			PlayerSlot = 20,
+		};
+		packet.BuffTypes[10] = 22;
+		ClientSerializeTest(packet
+			, new byte[] {
+				0x30, 0x00, 0x32, 0x14, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void PlayerManaTest()
+	{
+		ClientSerializeTest(
+			new PlayerMana
+			{
+				PlayerSlot = 20,
+				StatMana = 60,
+				StatManaMax = 100
+			}
+			, new byte[] { 0x08, 0x00, 0x2A, 0x14, 0x3C, 0x00, 0x64, 0x00 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void PlayerTeamTest()
+	{
+		ClientSerializeTest(
+			new PlayerTeam
+			{
+				PlayerSlot = 14,
+				Team = 2
+			}
+			, new byte[] { 0x05, 0x00, 0x2D, 0x0E, 0x02 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void PlayerZoneTest()
+	{
+		ClientSerializeTest(
+			new PlayerZone
+			{
+				PlayerSlot = 24,
+				Zone = 6
+			}
+			, new byte[] { 0x08, 0x00, 0x24, 0x18, 0x06, 0x00, 0x00, 0x00 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void PlayMusicItemTest()
+	{
+		ClientSerializeTest(
+			new PlayMusicItem
+			{
+				PlayerSlot = 30,
+				Range = 4f
+			}
+			, new byte[] { 0x08, 0x00, 0x3A, 0x1E, 0x00, 0x00, 0x80, 0x40 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void SpecialNPCEffectTest()
+	{
+		ClientSerializeTest(
+			new SpecialNPCEffect
+			{
+				PlayerSlot = 8,
+				Action = 20
+			}
+			, new byte[] { 0x05, 0x00, 0x33, 0x08, 0x14 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void StrikeNPCWithHeldItemTest()// TODO: complete this fact
+	{
+		/*ClientSerializeTest(
+			new StrikeNPCWithHeldItem
+			{
+				PlayerSlot = 8,
+				NPCSlot = 9
+			}
+			, new byte[] { }
+		);*/
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void SyncNPCNameTest()// TODO: add a server side serialization
+	{
+		ClientSerializeTest(
+			new SyncNPCName
+			{
+				NPCSlot = 50,
+			}
+			, new byte[] { 0x05, 0x00, 0x38, 0x32, 0x00 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void TeleportTest()// TODO: add a server side serialization
+	{
+		ClientSerializeTest(
+			new Teleport
+			{
+				PlayerSlot = 60,
+				Bit1 = 6,
+				Style = 2,
+				Position = new(500, 600),
+				ExtraInfo = 50
+			}
+			, new byte[] { 0x0F, 0x00, 0x41, 0x06, 0x3C, 0x00, 0x00, 0x00, 0xFA, 0x43, 0x00, 0x00, 0x16, 0x44, 0x02 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void UnlockTest()// TODO: add a server side serialization
+	{
+		ClientSerializeTest(
+			new Unlock
+			{
+				PlayerSlot = 20,
+				Position = new(500, 600),
+			}
+			, new byte[] { 0x08, 0x00, 0x34, 0x14, 0xF4, 0x01, 0x58, 0x02 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void UpdateSignTest()// TODO: add a server side serialization
+	{
+		ClientSerializeTest(
+			new UpdateSign
+			{
+				PlayerSlot = 28,
+				Position = new(600, 900),
+				SignFlags = 5,
+				SignSlot = 7,
+				Text = "123"
+			}
+			, new byte[] { 0x0F, 0x00, 0x2F, 0x07, 0x00, 0x58, 0x02, 0x84, 0x03, 0x03, 0x31, 0x32, 0x33, 0x1C, 0x05 }
 		);
 	}
 }

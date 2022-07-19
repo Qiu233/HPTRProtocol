@@ -1,8 +1,8 @@
 ﻿namespace HPTRProtocol.Packets.Sync;
 
-public class PlayerControls : Packet, IPlayerSlot
+public class UpdatePlayer : Packet, IPlayerSlot
 {
-	public override MessageID Type => MessageID.PlayerControls;
+	public override MessageID Type => MessageID.UpdatePlayer;
 	public byte PlayerSlot { get; set; }
 	public BitsByte Bit1 { get; set; }
 	public BitsByte Bit2 { get; set; }

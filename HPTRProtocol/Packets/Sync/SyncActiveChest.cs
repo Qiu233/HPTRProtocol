@@ -2,17 +2,17 @@
 
 namespace HPTRProtocol.Packets.Sync;
 
-public class SyncPlayerChest : Packet
+public class SyncActiveChest : Packet
 {
-	public override MessageID Type => MessageID.SyncPlayerChest;
+	public override MessageID Type => MessageID.SyncActiveChest;
 	public short Chest { get; set; }
-	public ShortPosition Position { get; set; }
+	public Position<short> Position { get; set; }
 	public Optional<string> ChestName { get; set; }
 
 	protected override void DeserializeOverride(BinaryReader br)
 	{
 		Chest = br.ReadInt16();
-		Position = br.ReadS<ShortPosition>();
+		Position = br.ReadS<Position<short>>();
 		byte len = br.ReadByte();
 		if (len > 0 && len <= 20)
 			ChestName = br.ReadString();

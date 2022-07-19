@@ -1,16 +1,16 @@
 ﻿namespace HPTRProtocol.Packets.Sync;
 
-public class ChangeDoor : Packet
+public class DoorToggle : Packet
 {
-	public override MessageID Type => MessageID.ChangeDoor;
+	public override MessageID Type => MessageID.DoorToggle;
 	public bool ChangeType { get; set; }
-	public ShortPosition Position { get; set; }
+	public Position<short> Position { get; set; }
 	public byte Direction { get; set; }
 
 	protected override void DeserializeOverride(BinaryReader br)
 	{
 		ChangeType = br.ReadBoolean();
-		Position = br.ReadS<ShortPosition>();
+		Position = br.ReadS<Position<short>>();
 		Direction = br.ReadByte();
 	}
 

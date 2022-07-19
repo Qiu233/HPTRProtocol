@@ -2,7 +2,7 @@
 
 public class ConnectRequest : Packet
 {
-	public override MessageID Type => MessageID.ClientHello;
+	public override MessageID Type => MessageID.ConnectRequest;
 	public string Version { get; set; }
 
 	protected override void DeserializeOverride(BinaryReader br) => Version = br.ReadString();
