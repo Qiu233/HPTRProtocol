@@ -3,9 +3,9 @@
 public class RequestEssentialTile : Packet
 {
 	public override MessageID Type => MessageID.RequestEssentialTile;
-	public Position<int> Position { get; set; }
+	public Position Position { get; set; }
 
-	protected override void DeserializeOverride(BinaryReader br) => Position = br.ReadS<Position<int>>();
+	protected override void DeserializeOverride(BinaryReader br) => Position = br.ReadSerializable<Position>();
 
-	protected override void SerializeOverride(BinaryWriter bw) => bw.WriteS(Position);
+	protected override void SerializeOverride(BinaryWriter bw) => bw.WriteSerializable(Position);
 }

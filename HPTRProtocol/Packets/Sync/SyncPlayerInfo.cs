@@ -33,13 +33,13 @@ public class SyncPlayerInfo : Packet
 
 		bw.Write(HideMisc);
 
-		bw.Write(HairColor);
-		bw.Write(SkinColor);
-		bw.Write(EyeColor);
-		bw.Write(ShirtColor);
-		bw.Write(UnderShirtColor);
-		bw.Write(PantsColor);
-		bw.Write(ShoeColor);
+		bw.WriteSerializable(HairColor);
+		bw.WriteSerializable(SkinColor);
+		bw.WriteSerializable(EyeColor);
+		bw.WriteSerializable(ShirtColor);
+		bw.WriteSerializable(UnderShirtColor);
+		bw.WriteSerializable(PantsColor);
+		bw.WriteSerializable(ShoeColor);
 
 		bw.Write(Bit3);
 		bw.Write(Bit4);
@@ -56,13 +56,13 @@ public class SyncPlayerInfo : Packet
 
 		HideMisc = br.ReadByte();
 
-		HairColor = br.ReadColor();
-		SkinColor = br.ReadColor();
-		EyeColor = br.ReadColor();
-		ShirtColor = br.ReadColor();
-		UnderShirtColor = br.ReadColor();
-		PantsColor = br.ReadColor();
-		ShoeColor = br.ReadColor();
+		HairColor = br.ReadSerializable<Color>();
+		SkinColor = br.ReadSerializable<Color>();
+		EyeColor = br.ReadSerializable<Color>();
+		ShirtColor = br.ReadSerializable<Color>();
+		UnderShirtColor = br.ReadSerializable<Color>();
+		PantsColor = br.ReadSerializable<Color>();
+		ShoeColor = br.ReadSerializable<Color>();
 
 		Bit3 = br.ReadByte();
 		Bit4 = br.ReadByte();

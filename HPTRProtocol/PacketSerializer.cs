@@ -1,12 +1,10 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("PacketTests")]
 
 namespace HPTRProtocol;
 public class PacketSerializer
 {
 	internal readonly Dictionary<MessageID, Type> Packets = new();
+	internal readonly Dictionary<NetModuleType, Type> NetModulePackets = new();
 	public bool IsClient
 	{
 		get;
@@ -18,8 +16,14 @@ public class PacketSerializer
 
 	private void Register(Type t)
 	{
-		if (Activator.CreateInstance(t) is Packet p)
-			Packets[p.Type] = t;
+		var instance = Activator.CreateInstance(t);
+		if (instance is Packet p)
+		{
+			if (p is NetModulesPacket nmp)
+				NetModulePackets[nmp.ModuleType] = t;
+			else
+				Packets[p.Type] = t;
+		}
 	}
 
 	public void Load(Assembly asm)
@@ -35,6 +39,8 @@ public class PacketSerializer
 		using var bw = new BinaryWriter(ms);
 		bw.Write((short)0);//placeholder of length
 		bw.WriteEnum(p.Type);
+		if (p.Type == MessageID.NetModules)
+			bw.WriteEnum((p as NetModulesPacket).ModuleType);
 		p.Serialize(bw);
 		var l = bw.BaseStream.Position;
 		bw.BaseStream.Position = 0;
@@ -50,16 +56,18 @@ public class PacketSerializer
 		using var br = new BinaryReader(ms);
 		Packet result = null;
 		var msgid = (MessageID)br.ReadByte();
-		/*if (msgid == MessageID.NetModules)
+		if (msgid == MessageID.NetModules)
 		{
 			var moduletype = (NetModuleType)br.ReadInt16();
-			if (moduledeserializers.TryGetValue(moduletype, out var f))
-				result = f(br);
+			if (NetModulePackets.TryGetValue(moduletype, out var f))
+			{
+				result = Activator.CreateInstance(f) as NetModulesPacket;
+				result.Deserialize(br);
+			}
 			else
 				Console.WriteLine($"[Warning] net module type = {moduletype} not defined, ignoring");
 		}
-		else */
-		if (Packets.TryGetValue(msgid, out var f2))
+		else if (Packets.TryGetValue(msgid, out var f2))
 		{
 			result = Activator.CreateInstance(f2) as Packet;
 			result.Deserialize(br);

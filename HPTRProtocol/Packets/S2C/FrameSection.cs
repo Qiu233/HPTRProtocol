@@ -3,18 +3,18 @@
 public class FrameSection : Packet
 {
 	public override MessageID Type => MessageID.FrameSection;
-	public Position<short> Start { get; set; }
-	public Position<short> End { get; set; }
+	public ShortPosition Start { get; set; }
+	public ShortPosition End { get; set; }
 
 	protected override void DeserializeOverride(BinaryReader br)
 	{
-		Start = br.ReadS<Position<short>>();
-		End = br.ReadS<Position<short>>();
+		Start = br.ReadSerializable<ShortPosition>();
+		End = br.ReadSerializable<ShortPosition>();
 	}
 
 	protected override void SerializeOverride(BinaryWriter bw)
 	{
-		bw.WriteS(Start);
-		bw.WriteS(End);
+		bw.WriteSerializable(Start);
+		bw.WriteSerializable(End);
 	}
 }

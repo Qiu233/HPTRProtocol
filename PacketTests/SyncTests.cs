@@ -1,6 +1,6 @@
 ﻿namespace PacketTests;
 
-public class SyncTest
+public class SyncTests
 {
 	[TestedFor("1.4.3.6")]
 	[Fact]
@@ -686,6 +686,65 @@ public class SyncTest
 				Text = "123"
 			}
 			, new byte[] { 0x0F, 0x00, 0x2F, 0x07, 0x00, 0x58, 0x02, 0x84, 0x03, 0x03, 0x31, 0x32, 0x33, 0x1C, 0x05 }
+		);
+	}
+
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void ChestNameTest()
+	{
+		ClientSerializeTest(
+			new ChestName
+			{
+				Position = new(7000, 6000),
+				ChestSlot = 60,
+				Name = "TestChestName"
+			}
+			, new byte[] {
+				0x17, 0x00, 0x45, 0x3C, 0x00, 0x58, 0x1B, 0x70, 0x17, 0x0D, 0x54, 0x65,
+				0x73, 0x74, 0x43, 0x68, 0x65, 0x73, 0x74, 0x4E, 0x61, 0x6D, 0x65 }
+		);
+	}
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void PlaceObjectTest()
+	{
+		ClientSerializeTest(
+			new PlaceObject
+			{
+				Random = 7,
+				Alternate = 8,
+				Direction = true,
+				ObjectType = 9,
+				Position = new(9000, 5000),
+				Style = 50
+			}
+			, new byte[] { 0x0E, 0x00, 0x4F, 0x28, 0x23, 0x88, 0x13, 0x09, 0x00, 0x32, 0x00, 0x08, 0x07, 0x01 }
+		);
+	}
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void SyncPlayerChestIndexTest()
+	{
+		ClientSerializeTest(
+			new SyncPlayerChestIndex
+			{
+				ChestIndex = 7,
+				PlayerSlot = 20
+			}
+			, new byte[] { 0x06, 0x00, 0x50, 0x14, 0x07, 0x00 }
+		);
+	}
+	[TestedFor("1.4.3.6")]
+	[Fact]
+	public void TeleportationPotionTest()
+	{
+		ClientSerializeTest(
+			new TeleportationPotion
+			{
+				Style = 7
+			}
+			, new byte[] { 0x04, 0x00, 0x49, 0x07 }
 		);
 	}
 }

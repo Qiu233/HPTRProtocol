@@ -16,29 +16,12 @@ internal static class IOHelper
 		fixed (byte* ptr = data)
 			return *(T*)ptr;
 	}
-	public static void Write(this BinaryWriter bw, Color color)
-	{
-		bw.Write((byte)color.R);
-		bw.Write((byte)color.G);
-		bw.Write((byte)color.B);
-	}
-	public static Color ReadColor(this BinaryReader br)
-	{
-		return new()
-		{
-			R = br.ReadByte(),
-			G = br.ReadByte(),
-			B = br.ReadByte()
-		};
-	}
-	public static void Write(this BinaryWriter bw, Guid guid) => WriteValue(bw, guid);
-	public static Guid ReadGuid(this BinaryReader br) => ReadValue<Guid>(br);
-	public static void WriteS<T>(this BinaryWriter bw, T v) where T : ISerializable, new()
+	public static void WriteSerializable<T>(this BinaryWriter bw, T v) where T : ISerializable, new()
 	{
 		bw.Flush();// TODO: review this
 		v.Serialize(bw);
 	}
-	public static T ReadS<T>(this BinaryReader br) where T : ISerializable, new()
+	public static T ReadSerializable<T>(this BinaryReader br) where T : ISerializable, new()
 	{
 		T t = new();
 		t.Deserialize(br);

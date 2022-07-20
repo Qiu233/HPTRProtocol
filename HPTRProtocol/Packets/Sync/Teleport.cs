@@ -15,7 +15,7 @@ public class Teleport : Packet, IPlayerSlot
 		Bit1 = br.ReadByte();
 		PlayerSlot = br.ReadByte();
 		HighBitOfPlayerIsAlwaysZero = br.ReadByte();
-		Position = br.ReadS<Vector2>();
+		Position = br.ReadSerializable<Vector2>();
 		Style = br.ReadByte();
 		if (Bit1[3])
 			ExtraInfo = br.ReadInt32();
@@ -26,7 +26,7 @@ public class Teleport : Packet, IPlayerSlot
 		bw.Write(Bit1);
 		bw.Write(PlayerSlot);
 		bw.Write(HighBitOfPlayerIsAlwaysZero);
-		bw.WriteS(Position);
+		bw.WriteSerializable(Position);
 		bw.Write(Style);
 		if (Bit1[3])
 			bw.Write(ExtraInfo);

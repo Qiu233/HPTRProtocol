@@ -25,8 +25,8 @@ public class SyncNPC : Packet
 	protected override void DeserializeOverride(BinaryReader br)
 	{
 		NPCSlot = br.ReadInt16();
-		Offset = br.ReadS<Vector2>();
-		Velocity = br.ReadS<Vector2>();
+		Offset = br.ReadSerializable<Vector2>();
+		Velocity = br.ReadSerializable<Vector2>();
 		Target = br.ReadUInt16();
 		Bit1 = br.ReadByte();
 		Bit2 = br.ReadByte();
@@ -60,8 +60,8 @@ public class SyncNPC : Packet
 	protected override void SerializeOverride(BinaryWriter bw)
 	{
 		bw.Write(NPCSlot);
-		bw.WriteS(Offset);
-		bw.WriteS(Velocity);
+		bw.WriteSerializable(Offset);
+		bw.WriteSerializable(Velocity);
 		bw.Write(Target);
 		bw.Write(Bit1);
 		bw.Write(Bit2);

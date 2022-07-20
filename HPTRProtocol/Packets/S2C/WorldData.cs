@@ -88,7 +88,7 @@ public class WorldData : Packet
 		WorldName = br.ReadString();
 		GameMode = br.ReadByte();
 
-		WorldUniqueID = br.ReadGuid();
+		WorldUniqueID = br.ReadValue<Guid>();
 		WorldGeneratorVersion = br.ReadUInt64();
 
 		MoonType = br.ReadByte();
@@ -134,7 +134,7 @@ public class WorldData : Packet
 		CaveBackStyle_3 = br.ReadByte();
 		CaveBackStyle_4 = br.ReadByte();
 
-		TreeTopsVariations = br.ReadS<TreeTopsVariations>();
+		TreeTopsVariations = br.ReadSerializable<TreeTopsVariations>();
 
 		Rain = br.ReadSingle();
 
@@ -177,7 +177,7 @@ public class WorldData : Packet
 		bw.Write(WorldName);
 		bw.Write(GameMode);
 
-		bw.Write(WorldUniqueID);
+		bw.WriteValue(WorldUniqueID);
 		bw.Write(WorldGeneratorVersion);
 
 		bw.Write(MoonType);
@@ -223,7 +223,7 @@ public class WorldData : Packet
 		bw.Write(CaveBackStyle_3);
 		bw.Write(CaveBackStyle_4);
 
-		bw.WriteS(TreeTopsVariations);
+		bw.WriteSerializable(TreeTopsVariations);
 
 		bw.Write(Rain);
 

@@ -17,17 +17,17 @@ public struct Color : ISerializable
 
 	public static readonly Color White = new(0xFF, 0xFF, 0xFF);
 
-	public void Serialize(BinaryWriter s)
+	public void Serialize(BinaryWriter bw)
 	{
-		s.Write((byte)R);
-		s.Write((byte)G);
-		s.Write((byte)B);
+		bw.Write((byte)R);
+		bw.Write((byte)G);
+		bw.Write((byte)B);
 	}
 
-	public void Deserialize(BinaryReader s)
+	public void Deserialize(BinaryReader br)
 	{
-		R = s.ReadByte();
-		G = s.ReadByte();
-		B = s.ReadByte();
+		R = br.ReadByte();
+		G = br.ReadByte();
+		B = br.ReadByte();
 	}
 }

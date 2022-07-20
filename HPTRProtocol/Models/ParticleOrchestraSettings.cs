@@ -1,15 +1,28 @@
 ﻿namespace HPTRProtocol.Models;
 
-public partial class ParticleOrchestraSettings
+public struct ParticleOrchestraSettings : ISerializable
 {
+	public Vector2 PositionInWorld;
+
+	public Vector2 MovementVector;
+
+	public int PackedShaderIndex;
+
+	public byte IndexOfPlayerWhoInvokedThis;
+
 	public void Serialize(BinaryWriter writer)
 	{
-		writer.Write(PositionInWorld.X);
-		writer.Write(PositionInWorld.Y);
-		writer.Write(MovementVector.X);
-		writer.Write(MovementVector.Y);
+		writer.WriteSerializable(PositionInWorld);
+		writer.WriteSerializable(MovementVector);
 		writer.Write(PackedShaderIndex);
 		writer.Write(IndexOfPlayerWhoInvokedThis);
+	}
+	public void Deserialize(BinaryReader br)
+	{
+		PositionInWorld = br.ReadSerializable<Vector2>();
+		MovementVector = br.ReadSerializable<Vector2>();
+		PackedShaderIndex = br.ReadInt32();
+		IndexOfPlayerWhoInvokedThis = br.ReadByte();
 	}
 
 	public static ParticleOrchestraSettings DeserializeFrom(BinaryReader reader)
@@ -22,15 +35,5 @@ public partial class ParticleOrchestraSettings
 			IndexOfPlayerWhoInvokedThis = reader.ReadByte()
 		};
 	}
-
-	public Vector2 PositionInWorld;
-
-	public Vector2 MovementVector;
-
-	public int PackedShaderIndex;
-
-	public byte IndexOfPlayerWhoInvokedThis;
-
-	public const int SerializationSize = 21;
 }
 

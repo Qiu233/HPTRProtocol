@@ -1,6 +1,6 @@
 ﻿namespace HPTRProtocol.Models;
 
-public enum CreativePowerTypes : short
+public enum CreativePowerTypes : ushort
 {
 	// Token: 0x04000552 RID: 1362
 	FreezeTime,

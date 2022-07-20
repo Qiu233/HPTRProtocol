@@ -3,9 +3,9 @@
 public class HitSwitch : Packet
 {
 	public override MessageID Type => MessageID.HitSwitch;
-	public Position<short> Position { get; set; }
+	public ShortPosition Position { get; set; }
 
-	protected override void DeserializeOverride(BinaryReader br) => Position = br.ReadS<Position<short>>();
+	protected override void DeserializeOverride(BinaryReader br) => Position = br.ReadSerializable<ShortPosition>();
 
-	protected override void SerializeOverride(BinaryWriter bw) => bw.WriteS(Position);
+	protected override void SerializeOverride(BinaryWriter bw) => bw.WriteSerializable(Position);
 }

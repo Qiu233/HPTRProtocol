@@ -22,13 +22,13 @@ public class UpdatePlayer : Packet, IPlayerSlot
 		Bit3 = br.ReadByte();
 		Bit4 = br.ReadByte();
 		SelectedItem = br.ReadByte();
-		Position = br.ReadS<Vector2>();
+		Position = br.ReadSerializable<Vector2>();
 		if (Bit2[2])
-			Velocity = br.ReadS<Vector2>();
+			Velocity = br.ReadSerializable<Vector2>();
 		if (Bit3[6])
 		{
-			PotionOfReturnOriginalUsePosition = br.ReadS<Vector2>();
-			PotionOfReturnHomePosition = br.ReadS<Vector2>();
+			PotionOfReturnOriginalUsePosition = br.ReadSerializable<Vector2>();
+			PotionOfReturnHomePosition = br.ReadSerializable<Vector2>();
 		}
 	}
 
@@ -40,13 +40,13 @@ public class UpdatePlayer : Packet, IPlayerSlot
 		bw.Write(Bit3);
 		bw.Write(Bit4);
 		bw.Write(SelectedItem);
-		bw.WriteS(Position);
+		bw.WriteSerializable(Position);
 		if (Bit2[2])
-			bw.WriteS(Velocity);
+			bw.WriteSerializable(Velocity);
 		if (Bit3[6])
 		{
-			bw.WriteS(PotionOfReturnOriginalUsePosition);
-			bw.WriteS(PotionOfReturnHomePosition);
+			bw.WriteSerializable(PotionOfReturnOriginalUsePosition);
+			bw.WriteSerializable(PotionOfReturnHomePosition);
 		}
 	}
 }

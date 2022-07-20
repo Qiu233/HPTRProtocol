@@ -9,12 +9,12 @@ public class AddPlayerBuff : Packet, IOtherPlayerSlot
 	protected override void DeserializeOverride(BinaryReader br)
 	{
 		OtherPlayerSlot = br.ReadByte();
-		Buff = br.ReadS<Buff<int>>();
+		Buff = br.ReadSerializable<Buff<int>>();
 	}
 
 	protected override void SerializeOverride(BinaryWriter bw)
 	{
 		bw.Write(OtherPlayerSlot);
-		bw.WriteS(Buff);
+		bw.WriteSerializable(Buff);
 	}
 }

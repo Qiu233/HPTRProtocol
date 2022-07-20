@@ -16,13 +16,13 @@ public class SendNPCBuffs : Packet, INPCSlot
 	{
 		NPCSlot = br.ReadInt16();
 		for (int i = 0; i < Buffs.Length; i++)
-			Buffs[i] = br.ReadS<Buff<short>>();
+			Buffs[i] = br.ReadSerializable<Buff<short>>();
 	}
 
 	protected override void SerializeOverride(BinaryWriter bw)
 	{
 		bw.Write(NPCSlot);
 		for (int i = 0; i < Buffs.Length; i++)
-			bw.WriteS(Buffs[i]);
+			bw.WriteSerializable(Buffs[i]);
 	}
 }

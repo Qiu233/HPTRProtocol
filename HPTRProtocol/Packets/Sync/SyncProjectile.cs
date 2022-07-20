@@ -20,8 +20,8 @@ public class SyncProjectile : Packet, IProjSlot, IPlayerSlot
 	protected override void DeserializeOverride(BinaryReader br)
 	{
 		ProjSlot = br.ReadByte();
-		Position = br.ReadS<Vector2>();
-		Velocity = br.ReadS<Vector2>();
+		Position = br.ReadSerializable<Vector2>();
+		Velocity = br.ReadSerializable<Vector2>();
 		PlayerSlot = br.ReadByte();
 		ProjType = br.ReadInt16();
 
@@ -45,8 +45,8 @@ public class SyncProjectile : Packet, IProjSlot, IPlayerSlot
 	protected override void SerializeOverride(BinaryWriter bw)
 	{
 		bw.Write(ProjSlot);
-		bw.WriteS(Position);
-		bw.WriteS(Velocity);
+		bw.WriteSerializable(Position);
+		bw.WriteSerializable(Velocity);
 		bw.Write(PlayerSlot);
 		bw.Write(ProjType);
 

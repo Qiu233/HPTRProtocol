@@ -9,8 +9,20 @@ public abstract class Packet : ISerializable
 	protected abstract void SerializeOverride(BinaryWriter bw);
 	protected abstract void DeserializeOverride(BinaryReader br);
 
-	public virtual void Serialize(BinaryWriter bw) => SerializeOverride(bw);
-	public virtual void Deserialize(BinaryReader br) => DeserializeOverride(br);
+	public virtual void Serialize(BinaryWriter bw)
+	{
+		SerializeOverride(bw);
+	}
+
+	public virtual void Deserialize(BinaryReader br)
+	{
+		DeserializeOverride(br);
+	}
+}
+public abstract class NetModulesPacket : Packet
+{
+	public override MessageID Type => MessageID.NetModules;
+	public abstract NetModuleType ModuleType { get; }
 }
 
 public interface IPlayerSlot
@@ -32,8 +44,4 @@ public interface INPCSlot
 public interface IProjSlot
 {
 	short ProjSlot { get; set; }
-}
-public abstract class NetModulesPacket : Packet
-{
-	public abstract NetModuleType ModuleType { get; }
 }

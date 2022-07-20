@@ -14,8 +14,8 @@ public class InstancedItem : Packet, IItemSlot
 	protected override void DeserializeOverride(BinaryReader br)
 	{
 		ItemSlot = br.ReadInt16();
-		Position = br.ReadS<Vector2>();
-		Velocity = br.ReadS<Vector2>();
+		Position = br.ReadSerializable<Vector2>();
+		Velocity = br.ReadSerializable<Vector2>();
 		Stack = br.ReadInt16();
 		Prefix = br.ReadByte();
 		Owner = br.ReadByte();
@@ -25,8 +25,8 @@ public class InstancedItem : Packet, IItemSlot
 	protected override void SerializeOverride(BinaryWriter bw)
 	{
 		bw.Write(ItemSlot);
-		bw.WriteS(Position);
-		bw.WriteS(Velocity);
+		bw.WriteSerializable(Position);
+		bw.WriteSerializable(Velocity);
 		bw.Write(Stack);
 		bw.Write(Prefix);
 		bw.Write(Owner);
